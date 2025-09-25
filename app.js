@@ -66,6 +66,11 @@ function compute() {
   $("weekendsLost").textContent = fmt(weekends, 0);
   $("deepBlocks").textContent = fmt(deepBlocks, 0);
 
+  drawStressChart();
+  drawSleepChart();
+  drawLoopChart();
+  drawSwapChart();
+
   function reclaimYears(deltaHpd) {
     const rh = deltaHpd * 365 * yearsRemaining;
     return rh / 8760;
@@ -121,3 +126,106 @@ function bind() {
 
 bind();
 compute();
+
+const ctx = (id) => {
+  const c = document.getElementById(id);
+  if (!c) return null;
+  const dpr = window.devicePixelRatio || 1;
+  c.width = c.clientWidth * dpr;
+  c.height = c.clientHeight * dpr;
+  const context = c.getContext("2d");
+  if (context) context.scale(dpr, dpr);
+  return context;
+};
+
+function drawStressChart(stress) {
+  const c = ctx("stressChart");
+  if (!c) return;
+  const w = c.canvas.clientWidth;
+  const h = c.canvas.clientHeight;
+  c.clearRect(0, 0, w, h);
+  const points = [25, 32, 38, 45, 55, 68, 84, 95];
+  const max = Math.max(...points);
+  const step = w / (points.length - 1);
+  c.beginPath();
+  c.strokeStyle = "rgba(255,51,99,0.8)";
+  c.lineWidth = 2.6;
+  points.forEach((value, i) => {
+    const x = i * step;
+    const y = h - (value / max) * (h * 0.8) - 10;
+    if (i === 0) c.moveTo(x, y);
+    else c.lineTo(x, y);
+  });
+  c.stroke();
+  c.closePath();
+}
+
+function drawSleepChart() {
+  const c = ctx("sleepChart");
+  if (!c) return;
+  const w = c.canvas.clientWidth;
+  const h = c.canvas.clientHeight;
+  c.clearRect(0, 0, w, h);
+  const bars = [8, 7.2, 6.9, 6.1, 5.5, 4.8, 4.2];
+  const barWidth = w / (bars.length * 1.8);
+  const max = Math.max(...bars);
+  bars.forEach((value, index) => {
+    const x = 24 + index * (barWidth * 1.8);
+    const height = (value / max) * (h * 0.75);
+    c.fillStyle = `rgba(140,123,255,${0.22 + index * 0.07})`;
+    c.fillRect(x, h - height - 12, barWidth, height);
+  });
+}
+
+function drawLoopChart() {
+  const c = ctx("loopChart");
+  if (!c) return;
+  const w = c.canvas.clientWidth;
+  const h = c.canvas.clientHeight;
+  c.clearRect(0, 0, w, h);
+  const radius = Math.min(w, h) / 2 - 20;
+  const centerX = w / 2;
+  const centerY = h / 2;
+  const slices = [
+    { label: "Trigger", value: 30 },
+    { label: "Scroll", value: 40 },
+    { label: "Spike", value: 20 },
+    { label: "Crash", value: 10 }
+  ];
+  let startAngle = -Math.PI / 2;
+  const total = slices.reduce((sum, s) => sum + s.value, 0);
+  slices.forEach((slice, index) => {
+    const angle = (slice.value / total) * Math.PI * 2;
+    c.beginPath();
+    c.moveTo(centerX, centerY);
+    c.arc(centerX, centerY, radius, startAngle, startAngle + angle);
+    c.closePath();
+    const colors = ["#ff3363", "#f97316", "#facc15", "#22d3ee"];
+    c.fillStyle = colors[index % colors.length] + "B3";
+    c.fill();
+    startAngle += angle;
+  });
+}
+
+function drawSwapChart() {
+  const c = ctx("swapChart");
+  if (!c) return;
+  const w = c.canvas.clientWidth;
+  const h = c.canvas.clientHeight;
+  c.clearRect(0, 0, w, h);
+  const stacks = [
+    { label: "Feeds", doom: 6.5, reclaimed: 3.4 },
+    { label: "Focus", doom: 1.2, reclaimed: 4.0 },
+    { label: "Recovery", doom: 0.8, reclaimed: 2.6 }
+  ];
+  const barWidth = w / (stacks.length * 2.2);
+  stacks.forEach((stack, i) => {
+    const x = 34 + i * (barWidth * 2.2);
+    const doomHeight = (stack.doom / 8) * (h * 0.8);
+    const reclaimHeight = (stack.reclaimed / 8) * (h * 0.8);
+    c.fillStyle = "rgba(255,51,99,0.75)";
+    c.fillRect(x, h - doomHeight - 16, barWidth, doomHeight);
+    c.fillStyle = "rgba(110,245,255,0.55)";
+    c.fillRect(x + barWidth + 6, h - reclaimHeight - 16, barWidth, reclaimHeight);
+  });
+}

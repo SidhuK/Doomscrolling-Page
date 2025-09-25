@@ -152,18 +152,45 @@
           <span class="tag">Leave phone outside bedroom</span>
         </div>
       </aside>
-    </div>
 
-    <section class="card" style="margin-top:24px">
-      <div class="section-title">Why this hits hard</div>
-      <ul>
-        <li>6.5 hours/day is a 45.5‑hour week—basically a full‑time job you pay with your future.</li>
-        <li>From 31 to 80, that adds up to about 116,252 hours—over 13 years of continuous time.</li>
-        <li>Even shaving off 1 hour/day gives you just over 3 extra years by age 80. Two hours/day gives you ~6 years back. Three gives you ~9.</li>
-      </ul>
-      <p class="foot">Assumptions: 365 days/year; “work‑year” = 2,000 hours; 10,000‑hour tracks for mastery are illustrative; numbers are rounded for clarity.</p>
-    </section>
-  </div>
+      <section class="card" style="margin-top:24px">
+        <div class="section-title">Collateral damage</div>
+        <div class="chart-grid">
+          <div class="chart-card">
+            <h4>Psych load vs. hours</h4>
+            <canvas id="stressChart"></canvas>
+            <p class="caption">Each additional hour above <strong>90 minutes/day</strong> correlates with a <strong>17% spike</strong> in self-reported anxiety, matching patterns highlighted in doomscrolling infographics from Ishanee Joshi.</p>
+          </div>
+          <div class="chart-card">
+            <h4>Sleep decay</h4>
+            <canvas id="sleepChart"></canvas>
+            <p class="caption">Frequent night scrolling cuts <strong>REM cycles</strong> and mimics chronic jet lag. Inspired by the chart studies in Drew Stream’s “DOOMscrolling” infographic series.</p>
+          </div>
+        </div>
+        <div class="chart-grid" style="margin-top:20px">
+          <div class="chart-card">
+            <h4>News refresh habit loop</h4>
+            <canvas id="loopChart"></canvas>
+            <p class="caption">The classic doom loop: alert → click → cortisol hit → short-term relief → repeat. Tooltips could expose the micro-triggers keeping you locked in.</p>
+          </div>
+          <div class="chart-card">
+            <h4>When you pivot</h4>
+            <canvas id="swapChart"></canvas>
+            <p class="caption">Cutting screen time releases hours for deliberate practice, recovery, or relationships. Each slice is a week you feel present again.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:24px">
+        <div class="section-title">Why this hits hard</div>
+        <ul>
+          <li>6.5 hours/day is a 45.5‑hour week—basically a full‑time job you pay with your future.</li>
+          <li>From 31 to 80, that adds up to about 116,252 hours—over 13 years of continuous time.</li>
+          <li>Even shaving off 1 hour/day gives you just over 3 extra years by age 80. Two hours/day gives you ~6 years back. Three gives you ~9.</li>
+        </ul>
+        <p class="foot">Assumptions: 365 days/year; “work‑year” = 2,000 hours; 10,000‑hour tracks for mastery are illustrative; numbers are rounded for clarity.</p>
+      </section>
+    </div>
 
 <script src="app.js"></script>
 </body>
