@@ -622,3 +622,60 @@ section.card li::before{
     scroll-behavior:auto !important;
   }
 }
+
+.hero-progress.life-bar{
+  margin-top:28px;
+}
+.hero-progress .section-title{
+  margin-bottom:12px;
+}
+.hero-callout{
+  margin-top:12px;
+  font-size:1rem;
+}
+
+.visual-grid{
+  margin-top:26px;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+.visual-card{
+  position:relative;
+  background:linear-gradient(150deg, rgba(11,16,28,0.92), rgba(9,12,21,0.78));
+  border:1px solid rgba(140,123,255,0.18);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:var(--shadow-soft);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  transition:transform 0.2s ease, border-color 0.2s ease;
+}
+.visual-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,51,99,0.32);
+}
+.visual-icon{
+  font-size:1.85rem;
+  filter:drop-shadow(0 6px 16px rgba(255,51,99,0.3));
+}
+.visual-card h4{
+  margin:0;
+  font-family:var(--family-display);
+  font-size:1.08rem;
+  color:#fff;
+}
+.visual-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:0.96rem;
+  line-height:1.6;
+}
+
+@media (max-width:980px){
+  .visual-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .visual-grid{grid-template-columns:1fr}
+}

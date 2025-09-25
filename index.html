@@ -25,6 +25,20 @@
         <span class="hero-stat"><strong id="tenkHeader">11.6</strong> mastery runs unfunded</span>
         <span class="hero-stat"><strong id="moviesHeader">77,502</strong> films forfeited</span>
       </div>
+      <div class="hero-progress life-bar">
+        <div class="section-title">Time remaining to age <span id="endAgeLabel">80</span></div>
+        <div class="bar-wrap" aria-label="Life bar">
+          <div class="bar" id="doomBar"></div>
+        </div>
+        <div class="bar-legend">
+          <span><span class="impact" id="doomYearsLabel">13.3 years</span> doomscrolling</span>
+          <span id="restYearsLabel">35.7 years for everything else</span>
+        </div>
+        <div class="hr"></div>
+        <div class="callout hero-callout">
+          At <b id="ageLabel">31</b> heading to <b id="endAgeLabel2">80</b>, <b class="impact"><span id="doomYearsCallout">13.3 years</span></b> of your remaining time dissolves into feeds if you keep it at <b id="hpdLabel">6.5 h/day</b>.
+        </div>
+      </div>
     </header>
 
     <div class="grid">
@@ -72,18 +86,21 @@
           </div>
         </div>
 
-        <div class="life-bar">
-          <div class="section-title">Your remaining life to age <span id="endAgeLabel">80</span></div>
-          <div class="bar-wrap" aria-label="Life bar">
-            <div class="bar" id="doomBar" style="width:27%"></div>
+        <div class="visual-grid">
+          <div class="visual-card">
+            <div class="visual-icon">📚</div>
+            <h4>Unread libraries</h4>
+            <p><b id="booksLost">19,375</b> 6-hour books you never crack open.</p>
           </div>
-          <div class="bar-legend">
-            <span><span class="impact" id="doomYearsLabel">13.3 years</span> doomscrolling</span>
-            <span id="restYearsLabel">35.7 years for everything else</span>
+          <div class="visual-card">
+            <div class="visual-icon">🌄</div>
+            <h4>Weekends cancelled</h4>
+            <p><b id="weekendsLost">2,422</b> adventure weekends erased from your future.</p>
           </div>
-          <div class="hr"></div>
-          <div class="callout">
-            At <b id="ageLabel">31</b> going to <b id="endAgeLabel2">80</b>, <b class="impact"><span id="doomYearsCallout">13.3 years</span></b> of your remaining time becomes doomscrolling if you keep it at <b id="hpdLabel">6.5 h/day</b>.
+          <div class="visual-card">
+            <div class="visual-icon">🧠</div>
+            <h4>Deep focus</h4>
+            <p><b id="deepBlocks">29,063</b> four-hour flow sessions surrendered to the feed.</p>
           </div>
         </div>
       </section>
@@ -137,7 +154,7 @@
       </aside>
     </div>
 
-    <section class="card" style="margin-top:18px">
+    <section class="card" style="margin-top:24px">
       <div class="section-title">Why this hits hard</div>
       <ul>
         <li>6.5 hours/day is a 45.5‑hour week—basically a full‑time job you pay with your future.</li>

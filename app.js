@@ -37,6 +37,9 @@ function compute() {
   const movies = totalHours / 1.5 || 0;
   const pomos = (totalHours * 60) / 25 || 0;
   const eightHourDays = totalHours / 8 || 0;
+  const books = totalHours / 6;
+  const weekends = totalHours / (16);
+  const deepBlocks = totalHours / 4;
 
   syncRangeFill();
 
@@ -59,6 +62,9 @@ function compute() {
   $("pomos").textContent = fmt(pomos, 0);
   $("movies").textContent = fmt(movies, 0);
   $("eightHourDays").textContent = fmt(eightHourDays, 0);
+  $("booksLost").textContent = fmt(books, 0);
+  $("weekendsLost").textContent = fmt(weekends, 0);
+  $("deepBlocks").textContent = fmt(deepBlocks, 0);
 
   function reclaimYears(deltaHpd) {
     const rh = deltaHpd * 365 * yearsRemaining;
