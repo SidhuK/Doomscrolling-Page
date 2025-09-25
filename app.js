@@ -75,6 +75,7 @@ function compute() {
   $("totalHoursHeader").textContent = fmt(totalHours, totalHours >= 1000 ? 0 : 1);
   $("pomosHeader").textContent = fmt(pomos, 0);
   $("tenkHeader").textContent = fmt(tenk, 1);
+  $("moviesHeader").textContent = fmt(movies, 0);
 }
 
 function bind() {
