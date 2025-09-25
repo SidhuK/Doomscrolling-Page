@@ -124,9 +124,6 @@ function bind() {
   });
 }
 
-bind();
-compute();
-
 const ctx = (id) => {
   const c = document.getElementById(id);
   if (!c) return null;
@@ -138,7 +135,7 @@ const ctx = (id) => {
   return context;
 };
 
-function drawStressChart(stress) {
+function drawStressChart() {
   const c = ctx("stressChart");
   if (!c) return;
   const w = c.canvas.clientWidth;
@@ -229,3 +226,32 @@ function drawSwapChart() {
     c.fillRect(x + barWidth + 6, h - reclaimHeight - 16, barWidth, reclaimHeight);
   });
 }
+
+function revealOnScroll() {
+  const animated = document.querySelectorAll("[data-animate]");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        if (entry.target.dataset.animateChart && entry.target.dataset.animateChart !== "done") {
+          entry.target.querySelectorAll("canvas").forEach(canvas => {
+            const id = canvas.id;
+            if (id === "stressChart") drawStressChart();
+            if (id === "sleepChart") drawSleepChart();
+            if (id === "loopChart") drawLoopChart();
+            if (id === "swapChart") drawSwapChart();
+          });
+          entry.target.dataset.animateChart = "done";
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+  animated.forEach(el => observer.observe(el));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  revealOnScroll();
+  bind();
+  compute();
+});
