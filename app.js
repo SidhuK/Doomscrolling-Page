@@ -66,6 +66,8 @@ function compute() {
   $("weekendsLost").textContent = fmt(weekends, 0);
   $("deepBlocks").textContent = fmt(deepBlocks, 0);
 
+  updateTimeline({ yearsRemaining, hoursPerYear, totalHours, yearsContinuous });
+
   drawStressChart();
   drawSleepChart();
   drawLoopChart();
@@ -123,6 +125,91 @@ function bind() {
     n.addEventListener("input", e => push(e.target.value));
   });
 }
+
+function clampPositive(v) {
+  return Math.max(0, parseFloat(v) || 0);
+}
+
+function getTimelineCopy(regainedHours) {
+  if (regainedHours >= 60000) {
+    return "Dock your phone outside the bedroom tonight and watch the reclaimed time cascade.";
+  }
+  if (regainedHours >= 35000) {
+    return "Batch your news checks to two windows — the rest feeds deep focus blocks.";
+  }
+  return "Start with a single 25-minute slot off the feed and rebuild from there.";
+}
+
+function updateTimeline({ yearsRemaining, hoursPerYear, totalHours, yearsContinuous }) {
+  const timeline = document.querySelector("[data-timeline]");
+  if (!timeline) return;
+
+  const cutHours = 3;
+  const baselineHours = clampPositive(state.hpd);
+  const actualCut = Math.min(cutHours, baselineHours);
+  const afterHpd = clampPositive(baselineHours - actualCut);
+  const regainedHours = actualCut * 365 * yearsRemaining;
+  const regainedYears = regainedHours / 8760;
+  const beforeYears = yearsContinuous;
+  const afterYears = Math.max(0, beforeYears - regainedYears);
+
+  $("timelineBeforeHpd").textContent = fmt(baselineHours, 2);
+  $("timelineBeforeYears").textContent = fmt(beforeYears, 1);
+  $("timelineBeforeEndAge").textContent = fmt(state.end);
+  $("timelineCutHours").textContent = fmt(actualCut, 1);
+  $("timelineAfterHpd").textContent = fmt(afterHpd, 2);
+  $("timelineRegainedYears").textContent = fmt(regainedYears, 1);
+  $("timelineRegainedHours").textContent = fmt(regainedHours, 0);
+
+  const milestones = [
+    {
+      ageOffset: 1,
+      before: "Another year of late-night scrolls steals your freshest focus blocks.",
+      after: "You funnel that time into creative sprints that actually ship."
+    },
+    {
+      ageOffset: 3,
+      before: "Weekend plans keep getting postponed while the feed wins your attention.",
+      after: "Those hours reappear as actual adventures on your calendar."
+    },
+    {
+      ageOffset: 7,
+      before: "Mastery projects stay on the someday list while the scroll loop repeats.",
+      after: "You’ve logged enough deliberate practice to launch the next big chapter."
+    },
+    {
+      ageOffset: 15,
+      before: "The doomscroll dividend compounds — years blur with little to show.",
+      after: "You’ve banked whole years of presence for people and projects that matter."
+    }
+  ];
+
+  milestones.forEach((milestone, index) => {
+    const ageId = `timelineAge${index + 1}`;
+    const beforeId = `timelineBeforeText${index + 1}`;
+    const afterId = `timelineAfterText${index + 1}`;
+    const milestoneAge = clampPositive(state.age + milestone.ageOffset);
+    $(ageId).textContent = `Age ${fmt(Math.min(milestoneAge, state.end), 0)}`;
+    $(beforeId).textContent = milestone.before;
+    $(afterId).textContent = milestone.after;
+  });
+
+  const progress = document.querySelector("[data-timeline] .timeline-progress");
+  if (progress) {
+    const percent = yearsRemaining ? Math.min(100, (regainedYears / yearsRemaining) * 100) : 0;
+    progress.style.height = percent + "%";
+  }
+
+  const cta = $("timelineCtaCopy");
+  if (cta) cta.textContent = getTimelineCopy(regainedHours);
+
+  const ctaButton = $("timelineCtaButton");
+  if (ctaButton) {
+    const label = actualCut >= 1 ? `Lock in the ${fmt(actualCut, 1)}h cut` : "Lock in the cut";
+    ctaButton.textContent = label;
+  }
+}
+
 
 const ctx = (id) => {
   const c = document.getElementById(id);
@@ -250,8 +337,42 @@ function revealOnScroll() {
   animated.forEach(el => observer.observe(el));
 }
 
+function observeTimelineItems() {
+  const timelineSection = document.querySelector("[data-timeline]");
+  if (!timelineSection) return;
+
+  const items = timelineSection.querySelectorAll(".timeline-item");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5, rootMargin: "0px 0px -80px 0px" });
+
+  items.forEach(item => observer.observe(item));
+}
+
+function bindTimelineCta() {
+  const button = $("timelineCtaButton");
+  if (!button) return;
+  button.addEventListener("click", () => {
+    button.classList.add("is-pressed");
+    button.disabled = true;
+    button.textContent = "Cut locked";
+    setTimeout(() => {
+      button.classList.remove("is-pressed");
+      button.disabled = false;
+      compute();
+    }, 2200);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   revealOnScroll();
+  observeTimelineItems();
   bind();
+  bindTimelineCta();
   compute();
 });

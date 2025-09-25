@@ -181,6 +181,110 @@
         </div>
       </section>
 
+      <section class="card timeline-card" data-animate data-timeline style="margin-top:24px">
+        <div class="section-title">Before / After timeline simulator</div>
+        <div class="timeline-intro">
+          <div class="timeline-scenario before" aria-live="polite">
+            <h3>Keep scrolling</h3>
+            <p>
+              Stay at <span id="timelineBeforeHpd">6.5</span> h/day and the feed still absorbs
+              <span id="timelineBeforeYears">13.3</span> years by <span id="timelineBeforeEndAge">80</span>.
+            </p>
+          </div>
+          <div class="timeline-scenario after" aria-live="polite">
+            <h3>The 3-hour cut</h3>
+            <p>
+              Trim <span id="timelineCutHours">3</span> h/day (down to <span id="timelineAfterHpd">3.5</span>) and you claw back
+              <span id="timelineRegainedYears">9.2</span> years — <span id="timelineRegainedHours">80,000</span> hours of life.
+            </p>
+          </div>
+        </div>
+        <p class="timeline-note">The simulator targets a 3-hour reduction. If you’re already below that, it adapts down to your current baseline.</p>
+
+        <div class="timeline-body">
+          <div class="timeline-track">
+            <div class="timeline-progress"></div>
+          </div>
+          <div class="timeline-items">
+            <article class="timeline-item">
+              <header>
+                <span class="milestone-age" id="timelineAge1">Age 32</span>
+                <h4>Momentum check-in</h4>
+              </header>
+              <div class="timeline-panels">
+                <div class="timeline-panel before">
+                  <span class="label">Before</span>
+                  <p id="timelineBeforeText1">Another year of late-night scrolls steals your freshest focus blocks.</p>
+                </div>
+                <div class="timeline-panel after">
+                  <span class="label">After</span>
+                  <p id="timelineAfterText1">You funnel that time into creative sprints that actually ship.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <header>
+                <span class="milestone-age" id="timelineAge2">Age 34</span>
+                <h4>Experiences banked</h4>
+              </header>
+              <div class="timeline-panels">
+                <div class="timeline-panel before">
+                  <span class="label">Before</span>
+                  <p id="timelineBeforeText2">Weekend plans keep getting postponed while the feed wins your attention.</p>
+                </div>
+                <div class="timeline-panel after">
+                  <span class="label">After</span>
+                  <p id="timelineAfterText2">Those hours reappear as actual adventures on your calendar.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <header>
+                <span class="milestone-age" id="timelineAge3">Age 38</span>
+                <h4>Depth over drift</h4>
+              </header>
+              <div class="timeline-panels">
+                <div class="timeline-panel before">
+                  <span class="label">Before</span>
+                  <p id="timelineBeforeText3">Mastery projects stay on the someday list while the scroll loop repeats.</p>
+                </div>
+                <div class="timeline-panel after">
+                  <span class="label">After</span>
+                  <p id="timelineAfterText3">You’ve logged enough deliberate practice to launch the next big chapter.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <header>
+                <span class="milestone-age" id="timelineAge4">Age 46</span>
+                <h4>Future-proofed</h4>
+              </header>
+              <div class="timeline-panels">
+                <div class="timeline-panel before">
+                  <span class="label">Before</span>
+                  <p id="timelineBeforeText4">The doomscroll dividend compounds — years blur with little to show.</p>
+                </div>
+                <div class="timeline-panel after">
+                  <span class="label">After</span>
+                  <p id="timelineAfterText4">You’ve banked whole years of presence for people and projects that matter.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="timeline-cta">
+          <div class="timeline-cta-copy">
+            <h4>Try this today</h4>
+            <p id="timelineCtaCopy">Dock your phone outside the bedroom tonight and watch the reclaimed time cascade.</p>
+          </div>
+          <button type="button" class="timeline-cta-button" id="timelineCtaButton">Lock in the cut</button>
+        </div>
+      </section>
+
       <section class="card" data-animate style="margin-top:24px">
         <div class="section-title">Why this hits hard</div>
         <ul>
