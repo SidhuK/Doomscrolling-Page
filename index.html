@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Doomscrolling, Quantified: From Age 31 to 80</title>
+<style>
+  :root{
+    --bg:#0b0f14;
+    --card:#121821;
+    --ink:#e6eef7;
+    --muted:#a7b3c7;
+    --accent:#6ae3ff;
+    --impact:#ff3b3b;
+    --good:#4ade80;
+    --warn:#f59e0b;
+    --grid:#1b2330;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";}
+  a{color:var(--accent);text-decoration:none}
+  .container{max-width:1100px;margin:0 auto;padding:28px}
+  header{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:22px}
+  header h2{font-size:28px;line-height:1.15;margin:0}
+  header p{margin:0;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+  @media (max-width: 980px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid #1d2532;border-radius:16px;padding:18px}
+  .controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:8px}
+  @media (max-width:700px){.controls{grid-template-columns:1fr}}
+  .control label{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:8px}
+  input[type=range]{width:100%}
+  input[type=number]{width:120px;background:#0f141c;border:1px solid #253044;color:var(--ink);border-radius:10px;padding:8px 10px}
+  .kpi-row{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;margin-top:14px}
+  @media (max-width:900px){.kpi-row{grid-template-columns:1fr}}
+  .kpi{background:#0f141c;border:1px solid #1d2532;border-radius:14px;padding:14px}
+  .kpi .label{color:var(--muted);font-size:12px;margin-bottom:4px}
+  .kpi .value{font-variant-numeric:tabular-nums;font-size:24px;font-weight:700}
+  .life-bar{margin-top:14px;background:linear-gradient(180deg,#0f141c,#0d131b);border:1px solid #1d2532;border-radius:14px;padding:14px}
+  .bar-wrap{height:26px;background:#0a0f16;border:1px solid #1a2330;border-radius:999px;overflow:hidden}
+  .bar{height:100%;background:linear-gradient(90deg,var(--impact),#ff6a3b);box-shadow:0 0 18px rgba(255,59,59,.35) inset}
+  .bar-legend{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}
+  .impact{color:#ffadad}
+  .section-title{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:6px 0 8px}
+  .equivs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media (max-width:900px){.equivs{grid-template-columns:1fr}}
+  .equiv{background:#0f141c;border:1px solid #1d2532;border-radius:14px;padding:14px}
+  .equiv h4{margin:0 0 6px 0}
+  .equiv p{margin:0;color:var(--muted)}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .tag{font-size:12px;color:#cbd5e1;background:#0f141c;border:1px solid #223049;border-radius:999px;padding:6px 10px}
+  .swap{display:grid;grid-template-columns:1fr;gap:10px}
+  .swap .idea{display:flex;justify-content:space-between;align-items:center;background:#0f141c;border:1px solid #203047;border-radius:14px;padding:12px}
+  .idea strong{font-weight:700}
+  .muted{color:var(--muted)}
+  .hr{height:1px;background:linear-gradient(90deg,transparent,#223047,transparent);margin:12px 0}
+  .foot{font-size:12px;color:var(--muted);margin-top:12px}
+  .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#0f141c;border:1px solid #223047;color:#cbd5e1;font-size:12px}
+  .callout{background:linear-gradient(180deg,#101723,#0e1520);border:1px solid #243043;padding:14px;border-radius:14px}
+  .callout b{color:#e9f1ff}
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h2>Doomscrolling, Quantified</h2>
+      <p class="muted">If you’re 31 now and keep doomscrolling 6.5 hours/day until 80</p>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <div class="section-title">Inputs</div>
+        <div class="controls">
+          <div class="control">
+            <label>
+              <span>Current age</span>
+              <input id="ageNum" type="number" min="0" max="120" value="31" />
+            </label>
+            <input id="age" type="range" min="0" max="120" value="31" />
+          </div>
+          <div class="control">
+            <label>
+              <span>Target age</span>
+              <input id="endNum" type="number" min="1" max="120" value="80" />
+            </label>
+            <input id="end" type="range" min="1" max="120" value="80" />
+          </div>
+          <div class="control">
+            <label>
+              <span>Doomscrolling hours/day</span>
+              <input id="hpdNum" type="number" min="0" step="0.25" value="6.5" />
+            </label>
+            <input id="hpd" type="range" min="0" max="16" step="0.25" value="6.5" />
+          </div>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="label">Total doomscrolling (hours)</div>
+            <div class="value" id="totalHours">116,252</div>
+            <div class="muted" id="hoursPerYear">≈ 2,372.5 hours/year • 45.5 hours/week</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Of your remaining life</div>
+            <div class="value"><span id="yearsContinuous">13.3</span> years</div>
+            <div class="muted">Nonstop, 24/7 equivalent</div>
+          </div>
+          <div class="kpi">
+            <div class="label">As a job</div>
+            <div class="value"><span id="workYears">58.1</span> work‑years</div>
+            <div class="muted">Assumes 2,000 hours/year</div>
+          </div>
+        </div>
+
+        <div class="life-bar">
+          <div class="section-title">Your remaining life to age <span id="endAgeLabel">80</span></div>
+          <div class="bar-wrap" aria-label="Life bar">
+            <div class="bar" id="doomBar" style="width:27%"></div>
+          </div>
+          <div class="bar-legend">
+            <span><span class="impact" id="doomYearsLabel">13.3 years</span> doomscrolling</span>
+            <span id="restYearsLabel">35.7 years for everything else</span>
+          </div>
+          <div class="hr"></div>
+          <div class="callout">
+            At <b id="ageLabel">31</b> going to <b id="endAgeLabel2">80</b>, <b class="impact"><span id="doomYearsCallout">13.3 years</span></b> of your remaining time becomes doomscrolling if you keep it at <b id="hpdLabel">6.5 h/day</b>.
+          </div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="section-title">Quick swaps (what you’d reclaim)</div>
+        <div class="swap">
+          <div class="idea">
+            <span>Cut 1 hour/day</span>
+            <span class="pill">+ <b id="reclaim1y">3.1</b> years by 80</span>
+          </div>
+          <div class="idea">
+            <span>Cut 2 hours/day</span>
+            <span class="pill">+ <b id="reclaim2y">6.1</b> years by 80</span>
+          </div>
+          <div class="idea">
+            <span>Cut 3 hours/day</span>
+            <span class="pill">+ <b id="reclaim3y">9.2</b> years by 80</span>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <div class="section-title">Make it tangible</div>
+        <div class="equivs">
+          <div class="equiv">
+            <h4>10,000‑hour tracks</h4>
+            <p><b id="tenk">11.6</b> deep‑skill journeys (e.g., instrument, language, craft)</p>
+          </div>
+          <div class="equiv">
+            <h4>Pomodoros</h4>
+            <p><b id="pomos">279,006</b> × 25‑minute focused sessions</p>
+          </div>
+          <div class="equiv">
+            <h4>90‑minute films</h4>
+            <p><b id="movies">77,502</b> full movies worth of time</p>
+          </div>
+          <div class="equiv">
+            <h4>8‑hour days</h4>
+            <p><b id="eightHourDays">14,532</b> days of solid work, creation, or rest</p>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <div class="section-title">Do this instead</div>
+        <div class="tag-row">
+          <span class="tag">1 hour/day: a “deep work hour” before screens</span>
+          <span class="tag">Replace feeds with a book on your home screen</span>
+          <span class="tag">Phone grayscale + no‑notification mornings</span>
+          <span class="tag">Keep your Mac in “app whitelist” mode</span>
+          <span class="tag">Batch social to two 15‑min windows</span>
+          <span class="tag">Leave phone outside bedroom</span>
+        </div>
+      </aside>
+    </div>
+
+    <section class="card" style="margin-top:18px">
+      <div class="section-title">Why this hits hard</div>
+      <ul>
+        <li>6.5 hours/day is a 45.5‑hour week—basically a full‑time job you pay with your future.</li>
+        <li>From 31 to 80, that adds up to about 116,252 hours—over 13 years of continuous time.</li>
+        <li>Even shaving off 1 hour/day gives you just over 3 extra years by age 80. Two hours/day gives you ~6 years back. Three gives you ~9.</li>
+      </ul>
+      <p class="foot">Assumptions: 365 days/year; “work‑year” = 2,000 hours; 10,000‑hour tracks for mastery are illustrative; numbers are rounded for clarity.</p>
+    </section>
+  </div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const fmt = (n, d=0) => Number(n).toLocaleString(undefined, {maximumFractionDigits:d, minimumFractionDigits:d});
+
+  const state = {
+    age: 31,
+    end: 80,
+    hpd: 6.5
+  };
+
+  function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+  function compute(){
+    const yearsRemaining = Math.max(0, state.end - state.age);
+    const hoursPerYear = state.hpd * 365;
+    const hoursPerWeek = state.hpd * 7;
+    const totalHours = hoursPerYear * yearsRemaining;
+    const yearsContinuous = totalHours / 8760;
+    const workYears = totalHours / 2000;
+    const tenk = totalHours / 10000;
+    const movies = totalHours / 1.5;
+    const pomos = (totalHours * 60) / 25;
+    const eightHourDays = totalHours / 8;
+
+    // KPIs
+    $("totalHours").textContent = fmt(totalHours, totalHours >= 1000 ? 0 : 1);
+    $("hoursPerYear").textContent = `≈ ${fmt(hoursPerYear,1)} hours/year • ${fmt(hoursPerWeek,1)} hours/week`;
+    $("yearsContinuous").textContent = fmt(yearsContinuous,1);
+    $("workYears").textContent = fmt(workYears,1);
+
+    // Life bar and labels
+    const doomShare = yearsRemaining ? (yearsContinuous / yearsRemaining) : 0;
+    $("doomBar").style.width = fmt(clamp(doomShare * 100, 0, 100), 1) + "%";
+    $("doomYearsLabel").textContent = fmt(yearsContinuous,1) + " years";
+    $("restYearsLabel").textContent = fmt(Math.max(0, yearsRemaining - yearsContinuous),1) + " years for everything else";
+    $("ageLabel").textContent = fmt(state.age);
+    $("endAgeLabel").textContent = fmt(state.end);
+    $("endAgeLabel2").textContent = fmt(state.end);
+    $("doomYearsCallout").textContent = fmt(yearsContinuous,1) + " years";
+    $("hpdLabel").textContent = fmt(state.hpd,2) + " h/day";
+
+    // Equivalents
+    $("tenk").textContent = fmt(tenk,1);
+    $("pomos").textContent = fmt(pomos,0);
+    $("movies").textContent = fmt(movies,0);
+    $("eightHourDays").textContent = fmt(eightHourDays,0);
+
+    // Reclaim scenarios
+    function reclaimYears(deltaHpd){
+      const rh = deltaHpd * 365 * yearsRemaining;
+      return rh / 8760;
+    }
+    $("reclaim1y").textContent = fmt(reclaimYears(1),1);
+    $("reclaim2y").textContent = fmt(reclaimYears(2),1);
+    $("reclaim3y").textContent = fmt(reclaimYears(3),1);
+  }
+
+  function bind(){
+    // Sliders <-> numbers sync
+    const pairs = [
+      ["age","ageNum","age"],
+      ["end","endNum","end"],
+      ["hpd","hpdNum","hpd"]
+    ];
+    pairs.forEach(([rangeId, numId, key])=>{
+      const r = $(rangeId), n = $(numId);
+      const push = (val) => {
+        if(key === "age"){
+          state.age = clamp(parseFloat(val)||0, 0, 120);
+          r.value = state.age; n.value = state.age;
+        }else if(key === "end"){
+          state.end = clamp(parseFloat(val)||0, 1, 120);
+          r.value = state.end; n.value = state.end;
+        }else{
+          state.hpd = clamp(parseFloat(val)||0, 0, 24);
+          r.value = state.hpd; n.value = state.hpd;
+        }
+        // Ensure end > age where possible
+        if(state.end < state.age){ state.end = state.age; $("end").value = state.end; $("endNum").value = state.end; }
+        compute();
+      };
+      r.addEventListener("input", e => push(e.target.value));
+      n.addEventListener("input", e => push(e.target.value));
+    });
+  }
+
+  bind();
+  compute();
+</script>
+</body>
+</html>
